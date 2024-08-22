@@ -22,7 +22,7 @@ This custom desktop application is designed for browsing the Koha OPAC (Online P
 First, clone the repository to your local machine:
 
 ```bash
-git clone <repository-url>
+git clone git@github.com:aravindrnair05/koha_opac_desktop_app.git
 cd koha_opac_desktop_app
 ```
 
