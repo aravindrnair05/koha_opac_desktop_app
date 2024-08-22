@@ -1,0 +1,15 @@
+{
+    "name": "custom-browser",
+    "version": "1.0.0",
+    "description": "A custom browser that only accesses a specified URL.",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron ."
+    },
+    "devDependencies": {
+        "electron": "^25.0.0",
+        "electron-packager": "^17.1.2"
+    },
+    "author": "Aravind R Nair",
+    "license": "MIT"
+}

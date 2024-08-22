@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Browser</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="header">
+        <button id="back" disabled>&#9664; Back</button>
+        <button id="forward" disabled>Forward &#9654;</button>
+        <button id="refresh">🔄 Refresh</button>
+        <span id="loading" class="hidden">Loading...</span>
+    </div>
+    
+
+    
+    <iframe id="webview" src="<<YOUR_OPACURL>>"></iframe>
+
+    <script>
+        const backButton = document.getElementById('back');
+        const forwardButton = document.getElementById('forward');
+        const refreshButton = document.getElementById('refresh');
+        const loadingIndicator = document.getElementById('loading');
+        const historyList = document.getElementById('history-list');
+
+        backButton.addEventListener('click', () => {
+            window.electronAPI.navigateBack();
+        });
+
+        forwardButton.addEventListener('click', () => {
+            window.electronAPI.navigateForward();
+        });
+
+        refreshButton.addEventListener('click', () => {
+            window.electronAPI.navigateRefresh();
+        });
+
+        window.electronAPI.onLoading(isLoading => {
+            if (isLoading) {
+                loadingIndicator.classList.remove('hidden');
+            } else {
+                loadingIndicator.classList.add('hidden');
+            }
+        });
+
+        window.electronAPI.onHistoryUpdate((history, currentIndex) => {
+            historyList.innerHTML = '';
+            history.forEach((url, index) => {
+                const listItem = document.createElement('li');
+                listItem.textContent = url;
+                listItem.addEventListener('click', () => {
+                    window.electronAPI.navigateTo(url);
+                });
+                if (index === currentIndex) {
+                    listItem.style.fontWeight = 'bold';
+                }
+                historyList.appendChild(listItem);
+            });
+
+            backButton.disabled = currentIndex === 0;
+            forwardButton.disabled = currentIndex === history.length - 1;
+        });
+    </script>
+</body>
+</html>
